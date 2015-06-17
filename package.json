@@ -1,0 +1,24 @@
+{
+    "name": "lindows",
+    "version": "0.1.0",
+    "description": "Make windows less ugly",
+    "main": "index.js",
+    "preferGlobal": true,
+    "directories": {
+        "bin": "bin"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cchamberlain/lindows.git"
+    },
+    "keywords": [
+        "windows",
+        "themes"
+    ],
+    "author": "Cole Chamberlain",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/cchamberlain/lindows/issues"
+    },
+    "homepage": "https://github.com/cchamberlain/lindows#readme"
+}
