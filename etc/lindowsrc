@@ -1,0 +1,94 @@
+#!/bin/bash
+#
+# Default for ~/.lindows/lindowsrc
+
+### --PATHS--
+### ROOT suffix => directory, PATH suffix => file
+
+export LINDOWS_ROOT="${LINDOWS_HOME-"$HOME/.lindows"}"
+export LINDOWSRC_PATH="$LINDOWS_ROOT/lindowsrc"
+
+export BIN_ROOT="$LINDOWS_ROOT/bin"
+export SRC_ROOT="$LINDOWS_ROOT/src"
+export DOWNLOAD_ROOT="$LINDOWS_ROOT/download"
+export DOWNLOAD_THEMES_ROOT="$DOWNLOAD_ROOT/themes"
+export THEMES_ROOT="$LINDOWS_ROOT/themes"
+
+
+PATH="$BIN_ROOT:$PATH"
+
+### --PLATFORM--
+### Figure out what platform this OS this is and standardize it
+
+PLATFORM="unknown"  ### The name of the platform
+PNAME="unknown"     ### The general name of the platform (unix / windows)
+
+unix_name=$(uname)
+shopt -s nocasematch
+case "$unix_name" in
+  *unix*)
+    PLATFORM="unix"
+    ;;
+  *linux*)
+    PLATFORM="linux"
+    ;;
+  *freebsd*)
+    PLATFORM="freebsd"
+    ;;
+  *darwin*)
+    PLATFORM="osx"
+    ;;
+  *windows*|*ming*)
+    PLATFORM="windows"
+    ;;
+esac
+
+case "$PLATFORM" in
+  linux|unix|freebsd|osx)
+  PNAME="unix"
+  ;;
+  windows)
+  PNAME="windows"
+  ;;
+  *)
+  >&2 echo "Unable to classify the system OS -> uname: $unix_name, PLATFORM: $PLATFORM"
+  exit 1
+esac
+
+### --OS INFO--
+### Export all OS high level info here
+
+export PLATFORM
+export PNAME
+
+
+### --ANSI COLOR CODES--
+### Export all ANSI color codes
+
+export NC='\033[0m'         #NO COLOR
+export BLACK='\033[0;30m'
+export RED='\033[0;31m'
+export GREEN='\033[0;32m'
+export BROWN_ORANGE='\033[0;33m'
+export BLUE='\033[0;34m'
+export PURPLE='\033[0;35m'
+export CYAN='\033[0;36m'
+export LIGHT_GRAY='\033[0;37m'
+export DARK_GRAY='\033[1;30m'
+export LIGHT_RED='\033[1;31m'
+export LIGHT_GREEN='\033[1;32m'
+export YELLOW='\033[1;33m'
+export LIGHT_BLUE='\033[1;34m'
+export LIGHT_PURPLE='\033[1;35m'
+export LIGHT_CYAN='\033[1;36m'
+export WHITE='\033[1;37m'
+
+
+### --URLs--
+### Store any commonly used URLs here
+
+export GIT_URL_BASE="https://github.com"
+export GIT_URL_LINDOWS="$GIT_URL_BASE/cchamberlain/lindows"
+
+
+

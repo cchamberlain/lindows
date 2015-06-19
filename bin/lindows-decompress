@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+. "${LINDOWS_HOME-"$HOME/.lindows"}/lindowsrc"
+
+PATH="$BIN_ROOT:$PATH"
+
+if [ -d "$DOWNLOAD_THEMES_ROOT" ] ; then
+  pushd "$DOWNLOAD_THEMES_ROOT"
+    for filename in *; do
+      extension="${filename##*.}"
+      theme_root="$THEMES_ROOT/${filename%.*}"
+
+      if [ "$extension" = "7z" ] ; then
+        mkdirp "$theme_root"
+        7za x -aoa -o"$theme_root" "$filename"
+      elif [ "$extension" = "zip" ] ; then
+        mkdirp "$theme_root"
+        unzip -o "$filename" -d "$theme_root"
+      elif [ "$extension" = "rar" ] ; then
+        unrar x "$filename" "$theme_root"
+      else
+        >&2 printf -- "- no file extension handling for %s, skipping -" "$filename"
+      fi
+    done
+  popd
+fi
+
+
+
+
