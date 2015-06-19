@@ -15,10 +15,10 @@ download() {
   verb="${3-GET}"
   if [ -n "$4" ] && [ ! -f "$file_path" ]; then
     DATA="$4"
-    curl -LX "$verb" -d "$DATA" "$url" >"$file_path"
+    curl -kLX "$verb" -d "$DATA" "$url" >"$file_path"
   fi
   if [ ! -f "$file_path" ]; then
-    curl -LX "$verb" "$url" >"$file_path"
+    curl -kLX "$verb" "$url" >"$file_path"
   fi
 }
 
