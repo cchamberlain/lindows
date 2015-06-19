@@ -24,14 +24,14 @@ download() {
 
 download_bin() {
   url="$1"
-  filename="${url##*/}"
+  filename="$(printf -- "%s" "${url##*/}" | sed "s/?.*//")"
   destination_path="$BIN_ROOT/${2-"$filename"}"
   download "$url" "$destination_path" "${3-GET}" "${4-}"
 }
 
 download_theme() {
   url="$1"
-  filename="${url##*/}"
+  filename="$(printf -- "%s" "${url##*/}" | sed "s/?.*//")"
   destination_path="$BIN_ROOT/${2-"$filename"}"
   download "$url" "$destination_path" "${3-GET}"
 }
