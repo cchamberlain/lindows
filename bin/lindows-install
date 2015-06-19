@@ -1,17 +1,23 @@
 #!/usr/bin/env bash
 
-DOWNLOAD_ROOT="$HOME/.lindows/download"
+set -e
 
-mkdirp "$DOWNLOAD_ROOT"
+if ! hash mkdirp 2>/dev/null; then
+  npm install -g mkdirp
+fi
 
-download() {
-  curl -L -X GET "$1" >"$DOWNLOAD_ROOT/$2"
-}
+if ! hash rimraf 2>/dev/null; then
+  npm install -g rimraf
+fi
 
-curl -L -X POST -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8" -H "Origin: http://www.syssel.net" -H "X-DevTools-Emulate-Network-Conditions-Client-Id: DA2C2662-CCE4-41CA-8C37-BF51E3BB0ECF" -H "X-FirePHP-Version: 0.0.6" -H "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36" -H "Content-Type: application/x-www-form-urlencoded" -H "Referer: http://www.syssel.net/hoefs/software_uxtheme.php" -H "Accept-Encoding: gzip, deflate" -H "Accept-Language: en-US,en;q=0.8" -H "Cache-Control: no-cache" -d 'id=Uxtheme&uxtheme=Download+UltraUxThemePatcher' http://www.syssel.net/hoefs/software_count.php >"$DOWNLOAD_ROOT/UltraUxThemePatcher.exe"
-
-download http://orig05.deviantart.net/754b/f/2015/097/5/6/mood_win_8_1_by_neiio-d8ova3h.7z "mood.7z"
-download http://orig09.deviantart.net/f583/f/2015/124/3/f/spectrum_8_1_beta_by_participant-d8r100p.zip "spectrum-beta.zip"
-download http://orig04.deviantart.net/7a96/f/2014/162/8/6/aerobydesign_for_windows_8_1_update_1_by_liveordietm-d6n7d7p.rar "aerobydesign.rar"
-
-
+LINDOWS_ROOT="${LINDOWS_HOME-"$HOME/.lindows"}"
+LINDOWSRC_PATH="$LINDOWS_ROOT/lindowsrc"
+if [ ! -f "$LINDOWSRC_PATH" ] ; then
+  SRC_ROOT="$LINDOWS_ROOT/src"
+  rimraf "$SRC_ROOT"
+  mkdirp "$SRC_ROOT"
+  pushd "$SRC_ROOT"
+    git clone https://github.com/cchamberlain/lindows
+    cp lindows/etc/lindowsrc "$LINDOWSRC_PATH"
+  popd
+fi

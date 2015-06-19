@@ -4,4 +4,4 @@ set -e
 
 . "${LINDOWS_HOME-"$HOME/.lindows"}/lindowsrc"
 
-cmd //c "explorer //root,%USERPROFILE%\\.lindows"
+rimraf ~/.lindows
