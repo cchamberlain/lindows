@@ -1,6 +1,6 @@
 {
   "name": "lindows",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Make windows less ugly",
   "main": "index.js",
   "preferGlobal": true,
