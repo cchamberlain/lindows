@@ -20,7 +20,7 @@ if [ -d "$DOWNLOAD_THEMES_ROOT" ] ; then
         mkdirp "$theme_root"
         unrar x "$filename" "$theme_root"
       else
-        >&2 printf -- "- no file extension handling for %s, skipping -" "$filename"
+        >&2 printf -- "- no file extension handler for %s, skipping -" "$filename"
       fi
     done
   popd
