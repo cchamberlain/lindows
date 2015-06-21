@@ -33,7 +33,7 @@ download_bin() {
 download_theme() {
   url="$1"
   filename="$(printf -- "%s" "${url##*/}" | sed "s/?.*//")"
-  destination_path="$BIN_ROOT/${2-"$filename"}"
+  destination_path="$DOWNLOAD_THEMES_ROOT/${2-"$filename"}"
   download "$url" "$destination_path" "${3-GET}"
 }
 
