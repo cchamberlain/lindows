@@ -19,6 +19,8 @@ fi
 LINDOWS_ROOT="${LINDOWS_HOME-"$HOME/.lindows"}"
 LINDOWSRC_PATH="$LINDOWS_ROOT/lindowsrc"
 if [ ! -f "$LINDOWSRC_PATH" ] ; then
+  rimraf "$LINDOWS_ROOT"
+  mkdirp "$LINDOWS_ROOT"
   pusht
     git clone https://github.com/cchamberlain/lindows
     cp lindows/etc/lindowsrc "$LINDOWSRC_PATH"
