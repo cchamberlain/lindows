@@ -10,17 +10,14 @@ if ! hash rimraf 2>/dev/null; then
   npm install -g rimraf
 fi
 
-if ! hash tmper 2>/dev/null; then
-  npm install -g tmper
-  tmper-install
-  . "$HOME/.bashrc"
-fi
-
 LINDOWS_ROOT="${LINDOWS_HOME-"$HOME/.lindows"}"
 LINDOWSRC_PATH="$LINDOWS_ROOT/lindowsrc"
 if [ ! -f "$LINDOWSRC_PATH" ] ; then
-  pusht
+  SRC_ROOT="$LINDOWS_ROOT/src"
+  rimraf "$SRC_ROOT"
+  mkdirp "$SRC_ROOT"
+  pushd "$SRC_ROOT"
     git clone https://github.com/cchamberlain/lindows
     cp lindows/etc/lindowsrc "$LINDOWSRC_PATH"
-  popt
+  popd
 fi

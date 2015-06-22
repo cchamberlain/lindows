@@ -7,21 +7,34 @@ set -e
 if [ -d "$DOWNLOAD_THEMES_ROOT" ] ; then
   pushd "$DOWNLOAD_THEMES_ROOT"
     for filename in *; do
+      compressed_path="$DOWNLOAD_THEMES_ROOT/$filename"
+      destination_name="${filename%.*}"
       extension="${filename##*.}"
-      theme_root="$THEMES_ROOT/${filename%.*}"
+      theme_root="$THEMES_ROOT/$destination_name"
 
-      if [ "$extension" = "7z" ] ; then
-        mkdirp "$theme_root"
-        7za x -aoa -o"$theme_root" "$filename"
-      elif [ "$extension" = "zip" ] ; then
-        mkdirp "$theme_root"
-        unzip -o "$filename" -d "$theme_root"
-      elif [ "$extension" = "rar" ] ; then
-        mkdirp "$theme_root"
-        unrar x "$filename" "$theme_root"
-      else
-        >&2 printf -- "- no file extension handler for %s, skipping -" "$filename"
-      fi
+      mkdirp "$theme_root"
+
+      pusht
+        if [ "$extension" = "7z" ] ; then
+          7za x -aoa -o"$destination_name" "$compressed_path"
+        elif [ "$extension" = "zip" ] ; then
+          unzip -o "$compressed_path" -d "$destination_name"
+        elif [ "$extension" = "rar" ] ; then
+          unrar x "$compressed_path" "$destination_name"
+        else
+          >&2 printf -- "- no file extension handler for %s, skipping -" "$filename"
+        fi
+
+        pushd "$destination_name"
+          for item in *; do
+            if [ -d "$item" ]; then
+              pushd "$item"
+                cp -rf ./* "$theme_root"
+              popd
+            fi
+          done
+        popd
+      popt
     done
   popd
 fi
